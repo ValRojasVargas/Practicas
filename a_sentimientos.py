@@ -1,12 +1,13 @@
 import pandas as pd
 import nltk
 import matplotlib.pyplot as plt
-nltk.download('brown')
-nltk.download('punkt')
-
-
 from nltk.tokenize import word_tokenize
 from textblob import TextBlob
+from nltk.corpus import stopwords
+
+nltk.download('brown')
+nltk.download('punkt')
+nltk.download('stopwords')
 
 df = pd.read_excel("C:/Users/valentina/Documents/comentarios8m.xlsx")
 
@@ -69,11 +70,15 @@ print(df[['Comment', 'Tokenized Words']])
 
 
 #Calcular la frecuencia de las palabras
+stop_words = set(stopwords.words('spanish'))
+
 def calcular_frecuencia_palabras(texto):
     #tokenizar el texto en palabras
     tokens = nltk.word_tokenize(texto)
+    #filtrar las stopwords
+    tokens_filtrados = [word.lower() for word in tokens if word.lower() not in stop_words and word.isalpha()]
     #calcular la frecuencia en sí
-    frecuencia = nltk.FreqDist(tokens)
+    frecuencia = nltk.FreqDist(tokens_filtrados)
     return frecuencia
 
 df['Frecuencia de palabras'] = df ['Comment'].apply(calcular_frecuencia_palabras)
