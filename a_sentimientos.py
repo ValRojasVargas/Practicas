@@ -69,15 +69,17 @@ print(df[['Comment', 'Tokenized Words']])
 
 
 
-#Calcular la frecuencia de las palabras
+#Calcular la frecuencia de las palabras sin stopwords
 stop_words = set(stopwords.words('spanish'))
+custom_stop_words = {'q','que','de', 'x', 'pq', 'tb'}
+stop_words.update(custom_stop_words)
 
 def calcular_frecuencia_palabras(texto):
     #tokenizar el texto en palabras
     tokens = nltk.word_tokenize(texto)
     #filtrar las stopwords
     tokens_filtrados = [word.lower() for word in tokens if word.lower() not in stop_words and word.isalpha()]
-    #calcular la frecuencia en sí
+    #calcular la frecuencia
     frecuencia = nltk.FreqDist(tokens_filtrados)
     return frecuencia
 
@@ -95,7 +97,7 @@ frecuencias=[word[1] for word in palabras_comunes]
 #crear grafico
 plt.figure(figsize=(10, 6))
 plt.pie(frecuencias, labels=palabras, autopct='%1.1f%%')
-plt.title('Frecuencia de las 10 palabras más comunes')
+plt.title('Las 10 palabras más comunes')
 plt.show()
 
 print(df.head())
