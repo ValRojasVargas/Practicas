@@ -74,6 +74,10 @@ stop_words = set(stopwords.words('spanish'))
 custom_stop_words = {'q','que','de', 'x', 'pq', 'tb'}
 stop_words.update(custom_stop_words)
 
+#verificar que las stopwords se añaden
+print(f'Stopwords personalizadas:{custom_stop_words}')
+print(f'Todas las stopwords: {stop_words}')
+
 def calcular_frecuencia_palabras(texto):
     #tokenizar el texto en palabras
     tokens = nltk.word_tokenize(texto)
